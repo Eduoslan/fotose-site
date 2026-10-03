@@ -1,0 +1,172 @@
+:root {
+  --fundo: #050505;
+  --cartao: #0d0d0d;
+  --borda: #1f1f1f;
+  --texto: #e8ecea;
+  --suave: #9aa3a1;
+  --ciano: #00f5ef;
+  --ciano-escuro: #00b8b3;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+a { color: var(--ciano); text-underline-offset: 3px; }
+a:hover { color: #7ffaf6; }
+
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: rgba(5, 5, 5, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--borda);
+}
+
+.topo .dentro {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--texto);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.2px;
+}
+
+.marca img { width: 32px; height: 32px; border-radius: 8px; }
+
+.topo nav { margin-left: auto; display: flex; gap: 16px; font-size: 14px; }
+.topo nav a { color: var(--suave); text-decoration: none; }
+.topo nav a:hover, .topo nav a[aria-current="page"] { color: var(--texto); }
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+
+h1 { font-size: 30px; line-height: 1.2; margin: 0 0 8px; }
+h2 { font-size: 20px; margin: 36px 0 8px; padding-top: 4px; }
+h3 { font-size: 16px; margin: 22px 0 4px; }
+p, li { color: #d4d9d7; }
+ul, ol { padding-left: 22px; }
+li { margin: 4px 0; }
+
+.atualizado { color: var(--suave); font-size: 14px; margin-bottom: 28px; }
+
+.aviso {
+  border: 1px solid #12403e;
+  background: #061614;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 20px 0;
+}
+
+.aviso p { margin: 0; }
+
+.indice {
+  border: 1px solid var(--borda);
+  background: var(--cartao);
+  border-radius: 14px;
+  padding: 12px 16px 12px 36px;
+  font-size: 15px;
+}
+
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 10px 8px; border-bottom: 1px solid var(--borda); }
+th { color: var(--suave); font-weight: 700; }
+.tabela { overflow-x: auto; }
+
+.passos { counter-reset: passo; list-style: none; padding: 0; }
+.passos li {
+  counter-increment: passo;
+  position: relative;
+  padding: 12px 14px 12px 52px;
+  margin: 10px 0;
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  background: var(--cartao);
+}
+.passos li::before {
+  content: counter(passo);
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--ciano);
+  color: #001413;
+  font-weight: 800;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+}
+
+.botao {
+  display: inline-block;
+  background: var(--ciano);
+  color: #001413;
+  font-weight: 800;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 999px;
+}
+.botao:hover { background: #7ffaf6; color: #001413; }
+
+.inicio {
+  text-align: center;
+  padding: 40px 0 8px;
+}
+.inicio img { width: 96px; height: 96px; border-radius: 24px; }
+.inicio h1 { font-size: 36px; margin-top: 18px; }
+.inicio .chamada { color: var(--suave); font-size: 18px; max-width: 520px; margin: 0 auto 26px; }
+
+.cartoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 36px; }
+.cartoes a {
+  display: block;
+  text-decoration: none;
+  color: var(--texto);
+  border: 1px solid var(--borda);
+  background: var(--cartao);
+  border-radius: 16px;
+  padding: 16px;
+}
+.cartoes a:hover { border-color: var(--ciano-escuro); }
+.cartoes strong { display: block; margin-bottom: 4px; }
+.cartoes span { color: var(--suave); font-size: 14px; }
+
+footer {
+  border-top: 1px solid var(--borda);
+  color: var(--suave);
+  font-size: 13px;
+}
+footer .dentro { max-width: 760px; margin: 0 auto; padding: 20px 16px 36px; }
+footer a { color: var(--suave); }
+
+@media (max-width: 520px) {
+  h1 { font-size: 26px; }
+  .inicio h1 { font-size: 30px; }
+  .topo nav { gap: 12px; font-size: 13px; }
+  .marca span { display: none; }
+}
