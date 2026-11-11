@@ -51,7 +51,7 @@ p { margin: 0; }
 .topo {
   position: fixed;
   inset: 0 0 auto 0;
-  z-index: 10;
+  z-index: 40; /* acima das etiquetas do celular ao rolar */
   transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
   border-bottom: 1px solid transparent;
 }

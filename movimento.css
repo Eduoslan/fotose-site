@@ -4,7 +4,7 @@
 
 /* Barra de progresso da leitura */
 .progresso {
-  position: fixed; inset: 0 0 auto 0; height: 2px; z-index: 20;
+  position: fixed; inset: 0 0 auto 0; height: 2px; z-index: 41;
   background: var(--ciano);
   transform-origin: left; transform: scaleX(var(--lido, 0));
 }
