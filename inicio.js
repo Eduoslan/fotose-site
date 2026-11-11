@@ -145,6 +145,7 @@
 
   // Tudo que depende da rolagem, num só quadro.
   const progresso = document.querySelector(".progresso");
+  const estreito = window.matchMedia("(max-width: 960px)");
   const flutuantes = document.querySelectorAll("[data-paralaxe]");
   const heroiGrade = document.querySelector(".heroi-grade");
   const faixa = document.querySelector(".faixa-trilho");
@@ -163,11 +164,18 @@
     const total = document.documentElement.scrollHeight - altura;
     progresso.style.setProperty("--lido", total > 0 ? (y / total).toFixed(4) : 0);
 
-    if (!semMovimento) {
+    // Em tela estreita o celular fica embaixo do texto: nada de sumir ou deslizar.
+    if (estreito.matches) {
+      flutuantes.forEach((el) => el.style.removeProperty("--py"));
+      heroiGrade.style.removeProperty("--sobe");
+      heroiGrade.style.removeProperty("--some");
+    } else if (!semMovimento) {
       flutuantes.forEach((el) => el.style.setProperty("--py", `${y * Number(el.dataset.paralaxe)}px`));
       const saida = Math.min(1, y / (altura * 0.9));
       heroiGrade.style.setProperty("--sobe", `${saida * 120}px`);
       heroiGrade.style.setProperty("--some", (1 - saida * 0.85).toFixed(3));
+    }
+    if (!semMovimento) {
 
       const caixaFinal = final.getBoundingClientRect();
       const chegada = Math.min(1, Math.max(0, (altura - caixaFinal.top) / (altura * 0.55)));

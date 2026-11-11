@@ -234,3 +234,19 @@
 
 /* Etiquetas sempre por cima do celular */
 .heroi-celular .flutua { z-index: 10; }
+
+/* Celular (tela estreita): giro mais leve e etiquetas menores nas bordas */
+@media (max-width: 960px) {
+  .giro { animation-name: vitrine-leve; }
+  @keyframes vitrine-leve {
+    0%, 100% { transform: rotateY(6deg) rotateX(1deg) translateY(0); }
+    50% { transform: rotateY(-6deg) rotateX(-1deg) translateY(-8px); }
+  }
+  #celular-heroi { --ry: 0deg; --rx: 0deg; }
+}
+@media (max-width: 600px) {
+  .flutua { font-size: 12px; padding: 8px 11px; gap: 7px; border-radius: 12px; }
+  .f1 { left: -22px; top: 3%; }
+  .f2 { right: -22px; top: 47%; }
+  .f3 { left: -18px; bottom: 4%; }
+}
