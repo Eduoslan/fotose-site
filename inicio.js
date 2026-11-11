@@ -53,14 +53,13 @@
       entradas.forEach((e) => {
         if (!e.isIntersecting) return;
         e.target.classList.add("visivel");
-        if (e.target.hasAttribute("data-contar")) contar(e.target);
         observador.unobserve(e.target);
       });
     },
     { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
   );
   revelar.forEach((el) => observador.observe(el));
-  document.querySelectorAll(".dividir, [data-contar]").forEach((el) => observador.observe(el));
+  document.querySelectorAll(".dividir").forEach((el) => observador.observe(el));
 
   const simboloFinal = document.querySelector(".final-simbolo");
   new IntersectionObserver(([e], obs) => {
@@ -68,21 +67,6 @@
     simboloFinal.classList.add("montar");
     obs.disconnect();
   }, { threshold: 0.6 }).observe(simboloFinal);
-
-  // Números contando até o valor.
-  function contar(el) {
-    const alvo = Number(el.dataset.contar);
-    const sufixo = el.dataset.sufixo || "";
-    const inicio = performance.now();
-    const duracao = 1600;
-    const passo = (agora) => {
-      const t = Math.min(1, (agora - inicio) / duracao);
-      const suave = 1 - Math.pow(1 - t, 4);
-      el.textContent = Math.round(alvo * suave) + sufixo;
-      if (t < 1) requestAnimationFrame(passo);
-    };
-    requestAnimationFrame(passo);
-  }
 
   // Herói: entrada, telas trocando, timecode e celular inclinando com o mouse.
   const heroi = document.querySelector(".heroi");
@@ -148,14 +132,10 @@
   const estreito = window.matchMedia("(max-width: 960px)");
   const flutuantes = document.querySelectorAll("[data-paralaxe]");
   const heroiGrade = document.querySelector(".heroi-grade");
-  const faixa = document.querySelector(".faixa-trilho");
   const final = document.querySelector(".final");
   const finalDentro = final.querySelector(".dentro");
   const etapas = document.getElementById("etapas");
   const itensEtapa = [...etapas.children];
-  let ultimoY = window.scrollY;
-  let faixaX = 0;
-  let velocidade = 0;
 
   function aoRolar() {
     const y = window.scrollY;
@@ -188,24 +168,9 @@
     etapas.style.setProperty("--progresso", p.toFixed(3));
     itensEtapa.forEach((li, i) => li.classList.toggle("feita", p >= i / (itensEtapa.length - 1) - 0.02));
 
-    velocidade += (y - ultimoY) * 0.4;
-    ultimoY = y;
   }
   window.addEventListener("scroll", () => requestAnimationFrame(aoRolar), { passive: true });
   aoRolar();
-
-  // Faixa de profissões: anda sozinha e acelera com a rolagem.
-  {
-    const metade = () => faixa.scrollWidth / 2;
-    const animarFaixa = () => {
-      velocidade *= 0.9;
-      faixaX -= 0.6 + (semMovimento ? 0 : Math.abs(velocidade) * 0.25);
-      if (-faixaX >= metade()) faixaX += metade();
-      faixa.style.setProperty("--fx", `${faixaX}px`);
-      requestAnimationFrame(animarFaixa);
-    };
-    requestAnimationFrame(animarFaixa);
-  }
 
   // Carrossel infinito em leque: cópias nas pontas, salto invisível ao chegar
   // nelas, arrastar com o mouse, pontinhos com o tempo do avanço automático.
@@ -355,15 +320,6 @@
     if (visivel) carrossel.classList.add("entrou");
     reiniciarTempo();
   }, { threshold: 0.35 }).observe(trilho);
-
-  // Brilho dos cartões de recurso segue o mouse.
-  document.querySelectorAll(".recurso").forEach((card) => {
-    card.addEventListener("pointermove", (e) => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty("--mx", `${e.clientX - r.left}px`);
-      card.style.setProperty("--my", `${e.clientY - r.top}px`);
-    });
-  });
 
   // Perguntas abrem e fecham com a altura animada.
   {
