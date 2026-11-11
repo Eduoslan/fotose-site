@@ -265,3 +265,10 @@
   .carrossel-trilho { perspective: none; }
   .slide, .slide.ativo { transform: scale(calc(1 - var(--dist, 1) * 0.1)); }
 }
+
+/* Celular: o início nunca some nem desliza ao rolar, e as etiquetas não
+   usam desfoque de fundo (pisca no Android sobre algo que se mexe). */
+@media (max-width: 960px) {
+  .heroi-grade { opacity: 1 !important; transform: none !important; }
+  .flutua { transform: none !important; backdrop-filter: none; -webkit-backdrop-filter: none; background: #141414; }
+}
