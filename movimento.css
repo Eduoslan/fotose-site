@@ -1,0 +1,236 @@
+/* =========================================================
+   MOVIMENTO (motion design do site)
+   ========================================================= */
+
+/* Barra de progresso da leitura */
+.progresso {
+  position: fixed; inset: 0 0 auto 0; height: 2px; z-index: 20;
+  background: var(--ciano);
+  transform-origin: left; transform: scaleX(var(--lido, 0));
+}
+
+/* Títulos: cada palavra sobe de dentro de uma máscara */
+.dividir .palavra { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.1em; margin-bottom: -0.1em; }
+.dividir .palavra > span {
+  display: inline-block;
+  transform: translateY(110%) rotate(4deg);
+  transform-origin: left bottom;
+  transition: transform 1s cubic-bezier(.16,1,.3,1);
+  transition-delay: calc(var(--i) * 55ms);
+}
+.dividir.visivel .palavra > span { transform: none; }
+
+/* Celular do início em 3D */
+.heroi-celular { perspective: 1200px; }
+#celular-heroi {
+  transform: rotateY(var(--ry, -14deg)) rotateX(var(--rx, 6deg));
+  transition: transform 0.6s cubic-bezier(.2,.7,.2,1);
+  animation: chegar-celular 1.6s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes chegar-celular { from { transform: translateY(80px) rotateY(-40deg) rotateX(20deg) scale(0.9); opacity: 0; } }
+
+/* Visor de câmera em volta do celular */
+.visor { position: absolute; inset: -38px -46px; pointer-events: none; animation: aparecer 1s 0.9s both; }
+@keyframes aparecer { from { opacity: 0; } }
+.canto { position: absolute; width: 26px; height: 26px; border: solid rgba(242, 245, 244, 0.55); }
+.c1 { top: 0; left: 0; border-width: 2px 0 0 2px; animation: canto1 1s 0.9s cubic-bezier(.16,1,.3,1) both; }
+.c2 { top: 0; right: 0; border-width: 2px 2px 0 0; animation: canto2 1s 0.9s cubic-bezier(.16,1,.3,1) both; }
+.c3 { bottom: 0; left: 0; border-width: 0 0 2px 2px; animation: canto3 1s 0.9s cubic-bezier(.16,1,.3,1) both; }
+.c4 { bottom: 0; right: 0; border-width: 0 2px 2px 0; animation: canto4 1s 0.9s cubic-bezier(.16,1,.3,1) both; }
+@keyframes canto1 { from { transform: translate(40px, 40px); opacity: 0; } }
+@keyframes canto2 { from { transform: translate(-40px, 40px); opacity: 0; } }
+@keyframes canto3 { from { transform: translate(40px, -40px); opacity: 0; } }
+@keyframes canto4 { from { transform: translate(-40px, -40px); opacity: 0; } }
+.rec, .timecode, .iso {
+  position: absolute; font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums; color: rgba(242, 245, 244, 0.8);
+}
+.rec { top: -2px; left: 40px; display: flex; align-items: center; gap: 7px; }
+.rec i { width: 8px; height: 8px; border-radius: 50%; background: #ff3b3b; animation: piscar 1.2s step-end infinite; }
+@keyframes piscar { 50% { opacity: 0; } }
+.timecode { top: -2px; right: 40px; }
+.iso { bottom: -3px; left: 50%; transform: translateX(-50%); white-space: nowrap; color: rgba(242, 245, 244, 0.6); }
+/* Etiquetas: entram depois do celular e se movem em paralaxe */
+.flutua { z-index: 4; animation: none; opacity: 0; transform: translateY(var(--py, 0px)); transition: opacity 0.8s, transform 0.15s linear; }
+.heroi.pronto .flutua { opacity: 1; }
+.heroi.pronto .f1 { transition-delay: 1.2s, 0s; }
+.heroi.pronto .f2 { transition-delay: 1.45s, 0s; }
+.heroi.pronto .f3 { transition-delay: 1.7s, 0s; }
+
+/* Herói se afasta ao rolar */
+.heroi-grade { transform: translateY(var(--sobe, 0px)); opacity: var(--some, 1); }
+
+/* Botões das lojas magnéticos */
+.magnetico { transition: transform 0.35s cubic-bezier(.2,.7,.2,1), border-color 0.3s; transform: translate(var(--tx, 0px), var(--ty, 0px)); }
+.magnetico:hover { border-color: #3a3a3a; }
+
+/* Carrossel em leque (coverflow) */
+.carrossel-trilho { perspective: 1400px; }
+.slide, .slide.ativo {
+  opacity: calc(1 - var(--dist, 1) * 0.5);
+  transform: rotateY(calc(var(--lado, 0) * -24deg)) scale(calc(1 - var(--dist, 1) * 0.1));
+  transition: none;
+}
+.slide figcaption { transition: opacity 0.4s, transform 0.4s; opacity: 0; transform: translateY(10px); }
+.slide.ativo figcaption { opacity: 1; transform: none; }
+
+/* Ícones se desenhando */
+.recurso-icone svg * { stroke-dasharray: 80; stroke-dashoffset: 80; transition: stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1); transition-delay: calc(var(--atraso, 0s) + 0.3s); }
+.recurso.visivel .recurso-icone svg * { stroke-dashoffset: 0; }
+.recurso-icone { transition: transform 0.5s cubic-bezier(.3,1.5,.5,1); }
+.recurso:hover .recurso-icone { transform: rotate(-8deg) scale(1.08); }
+
+/* Perfis entram tortos e se endireitam */
+.perfil.revelar { transform: translateY(40px) rotate(2deg); }
+.perfil.revelar:nth-child(odd) { transform: translateY(40px) rotate(-2deg); }
+.perfil.revelar.visivel { transform: none; }
+.perfil.revelar.visivel:hover { transform: translateY(-6px); }
+
+/* Números contando */
+.numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 120px; }
+.numero { border-left: 1px solid var(--borda); padding: 6px 0 6px 24px; }
+.numero strong { display: block; font-size: clamp(56px, 8vw, 96px); font-weight: 600; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.numero span { color: var(--suave); font-size: 16px; display: block; margin-top: 10px; max-width: 220px; }
+
+/* Etapas: bolinha estala ao acender */
+.etapas strong { color: var(--suave); transition: color 0.5s; }
+.etapas li.feita strong { color: var(--texto); }
+.etapas li.feita .bolinha { animation: estalar 0.5s cubic-bezier(.3,1.6,.5,1); }
+@keyframes estalar { 40% { transform: scale(1.35); } }
+
+/* Perguntas abrindo com altura suave */
+.duvidas details { overflow: hidden; transition: height 0.4s cubic-bezier(.2,.7,.2,1); }
+.duvidas summary { transition: color 0.2s, padding-left 0.3s; }
+.duvidas summary:hover { color: var(--ciano); padding-left: 6px; }
+
+/* Faixa anda com a rolagem */
+.faixa-trilho { animation: none; transform: translateX(var(--fx, 0px)); will-change: transform; }
+
+/* Fechamento cresce ao chegar */
+.final .dentro { transform: scale(var(--escala, 0.9)); opacity: var(--opac, 0.4); }
+
+/* Granulação de filme bem leve */
+.grao {
+  position: fixed; inset: -50%; z-index: 30; pointer-events: none; opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grao 0.9s steps(4) infinite;
+}
+@keyframes grao { 25% { transform: translate(-3%, 2%); } 50% { transform: translate(2%, -3%); } 75% { transform: translate(-2%, -2%); } }
+
+@media (max-width: 960px) {
+  .visor { inset: -28px -30px; }
+  .numeros { grid-template-columns: 1fr; gap: 28px; margin-bottom: 88px; }
+}
+@media (max-width: 600px) {
+  .iso { display: none; }
+  .rec { left: 32px; }
+  .timecode { right: 32px; }
+  .canto { width: 20px; height: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dividir .palavra > span { transform: none; opacity: 0; transition: opacity 0.8s ease; transition-delay: calc(var(--i) * 45ms); }
+  .dividir.visivel .palavra > span { opacity: 1; }
+  .perfil.revelar, .perfil.revelar.visivel:hover { transform: none; }
+  .c1, .c2, .c3, .c4 { animation: aparecer 1s 0.6s both; }
+  .final .dentro { transform: none; opacity: 1; }
+  .heroi-grade { transform: none; }
+  .grao { animation: none; }
+  #heroi-telas img, #heroi-telas img.saindo { transform: none; }
+}
+
+/* Troca de telas no celular: corte em cortina, como na edição */
+#heroi-telas img { opacity: 1; transform: scale(1.06); clip-path: inset(0 0 0 100%); transition: clip-path 0.85s cubic-bezier(.7,0,.2,1), transform 1.6s cubic-bezier(.16,1,.3,1); }
+#heroi-telas img.saindo { clip-path: inset(0); transform: scale(0.97); z-index: 1; transition: transform 0.85s cubic-bezier(.7,0,.2,1); }
+#heroi-telas img.ativa { clip-path: inset(0); transform: none; z-index: 2; }
+
+/* Carrossel: entrada, flutuação do celular do meio, arrastar e tempo no pontinho */
+.carrossel .slide .celular {
+  opacity: 0;
+  transform: translateY(140px) rotateX(28deg) scale(0.9);
+  transition: opacity 0.9s ease, transform 1.2s cubic-bezier(.16,1,.3,1);
+  transition-delay: calc(var(--dist, 0) * 140ms);
+}
+.carrossel.entrou .slide .celular { opacity: 1; transform: none; }
+.carrossel.entrou .slide.ativo .celular { animation: boiar 5s ease-in-out 1.2s infinite; }
+@keyframes boiar { 50% { translate: 0 -10px; } }
+.slide.ativo .celular { box-shadow: 0 0 0 1px #3a3a3a, 0 50px 80px -30px rgba(0, 0, 0, 0.95); }
+.slide .celular-tela img { transition: filter 0.5s; }
+.slide:not(.ativo) .celular-tela img { filter: brightness(0.7) saturate(0.8); }
+.carrossel-trilho { cursor: grab; user-select: none; -webkit-user-select: none; }
+.carrossel-trilho.arrastando { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+.carrossel-trilho img { -webkit-user-drag: none; pointer-events: none; }
+.slide figcaption strong { transition: color 0.4s; }
+.slide.ativo figcaption strong { color: var(--ciano); }
+
+.pontos button { position: relative; overflow: hidden; }
+.pontos button.ativo { background: #2a2a2a; }
+.pontos button.ativo::after { content: ""; position: absolute; inset: 0; background: var(--ciano); border-radius: inherit; }
+.pontos button.contando::after { transform-origin: left; animation: encher var(--tempo, 4s) linear both; }
+@keyframes encher { from { transform: scaleX(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .carrossel .slide .celular { transform: none; transition: opacity 0.9s ease; }
+  .carrossel.entrou .slide.ativo .celular { animation: none; }
+}
+
+/* Celular do início em 3D: gira devagar como produto em vitrine, com
+   espessura na lateral e um reflexo de luz passando pela tela. */
+.heroi-celular { transform-style: flat; }
+.giro { position: relative; z-index: 1; transform-style: preserve-3d; animation: vitrine 9s ease-in-out infinite; }
+@keyframes vitrine {
+  0%, 100% { transform: rotateY(10deg) rotateX(2deg) translateY(0); }
+  50% { transform: rotateY(-12deg) rotateX(-3deg) translateY(-14px); }
+}
+#celular-heroi { transform-style: preserve-3d; }
+.celular-lateral {
+  position: absolute; top: 18px; bottom: 18px; right: -1px; width: 14px;
+  border-radius: 0 40px 40px 0;
+  background: linear-gradient(90deg, #262626, #0d0d0d 60%, #1c1c1c);
+  transform-origin: left center;
+  transform: rotateY(90deg);
+}
+.celular-lateral::before {
+  content: ""; position: absolute; left: 3px; top: 22%; width: 8px; height: 60px;
+  border-radius: 4px; background: #2f2f2f;
+}
+#celular-heroi::before {
+  content: ""; position: absolute; inset: 0; border-radius: 44px;
+  transform: translateZ(-14px);
+  background: #0a0a0a;
+  box-shadow: 0 0 0 1px #1f1f1f;
+}
+.reflexo {
+  position: absolute; inset: -40% -60%; z-index: 5; pointer-events: none;
+  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.10) 48%, rgba(255, 255, 255, 0.03) 52%, transparent 58%);
+  animation: reflexo 9s ease-in-out infinite;
+}
+@keyframes reflexo {
+  0%, 100% { transform: translateX(-28%); }
+  50% { transform: translateX(28%); }
+}
+
+/* Moldura de celular de verdade: barra de status em cima e tracinho
+   embaixo, para o app não encostar nos cantos arredondados. */
+.celular { aspect-ratio: 390 / 900; }
+.celular-tela { display: flex; flex-direction: column; padding: 38px 0 22px; }
+.carrossel .celular-tela img { flex: 1; min-height: 0; width: 100%; height: auto; object-fit: cover; object-position: top; }
+#heroi-telas img { inset: 38px 0 22px 0; width: 100%; height: auto; }
+.barra-status {
+  position: absolute; top: 0; left: 0; right: 0; height: 38px; z-index: 6;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 2px 26px 0 30px;
+  font-size: 13px; font-weight: 700; color: #f2f5f4; letter-spacing: 0;
+}
+.ilha { position: absolute; left: 50%; top: 9px; width: 30%; height: 22px; margin-left: -15%; border-radius: 99px; background: #000; box-shadow: 0 0 0 1px #161616; }
+.icones-status { display: flex; align-items: center; gap: 5px; }
+.icones-status svg { height: 11px; fill: #f2f5f4; }
+.celular-tela::after {
+  content: ""; position: absolute; left: 50%; bottom: 8px; z-index: 6;
+  width: 34%; height: 4px; margin-left: -17%; border-radius: 99px;
+  background: rgba(242, 245, 244, 0.85);
+}
+.slide .barra-status { font-size: 11px; padding: 0 20px 0 24px; }
+
+/* Etiquetas sempre por cima do celular */
+.heroi-celular .flutua { z-index: 10; }
