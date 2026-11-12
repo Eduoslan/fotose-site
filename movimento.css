@@ -274,3 +274,13 @@
   .heroi-grade { opacity: 1 !important; transform: none !important; }
   .flutua { transform: none !important; backdrop-filter: none; -webkit-backdrop-filter: none; background: #1a1a1a; }
 }
+
+/* Tags sobre o celular: flutuam devagar, cada uma no seu tempo.
+   Usa "translate" para não brigar com o transform da paralaxe. */
+.heroi.pronto .flutua { animation: boiar-tag 5.5s ease-in-out infinite; }
+.heroi.pronto .flutua.f2 { animation-duration: 6.5s; animation-delay: -2.2s; }
+.heroi.pronto .flutua.f3 { animation-duration: 6s; animation-delay: -4s; }
+@keyframes boiar-tag { 0%, 100% { translate: 0 0; } 50% { translate: 0 -9px; } }
+@media (max-width: 600px) {
+  @keyframes boiar-tag { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+}
