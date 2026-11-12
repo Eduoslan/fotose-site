@@ -398,7 +398,7 @@ p { margin: 0; }
 .flutua small { display: block; font-size: 11.5px; font-weight: 500; color: var(--suave); margin-bottom: 2px; }
 .notif-icone {
   flex: 0 0 auto; width: 30px; height: 30px; padding: 6px 7px;
-  border-radius: 8px; background: #0a2a27; fill: var(--ciano);
+  border-radius: 8px; background: #000; box-shadow: inset 0 0 0 1px #2a2a2a; fill: var(--ciano);
 }
 
 /* O dia a dia: texto e tela de verdade, em linhas alternadas */
